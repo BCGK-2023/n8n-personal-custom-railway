@@ -29,8 +29,16 @@ RUN npm install \
     axios@0.27.2 \
     cheerio@1.0.0-rc.5
 
-# Create a simple test file to verify installation
-RUN echo 'console.log("Custom packages installed:", Object.keys(require("./package.json").dependencies));' > test-packages.js
+# Create symbolic links in n8n's node_modules so they're discoverable
+RUN mkdir -p /usr/local/lib/node_modules/n8n/node_modules
+RUN ln -sf /home/node/custom_packages/node_modules/docxtemplater /usr/local/lib/node_modules/n8n/node_modules/docxtemplater
+RUN ln -sf /home/node/custom_packages/node_modules/docxtemplater-image-module-free /usr/local/lib/node_modules/n8n/node_modules/docxtemplater-image-module-free
+RUN ln -sf /home/node/custom_packages/node_modules/lodash /usr/local/lib/node_modules/n8n/node_modules/lodash
+RUN ln -sf /home/node/custom_packages/node_modules/moment /usr/local/lib/node_modules/n8n/node_modules/moment
+RUN ln -sf /home/node/custom_packages/node_modules/axios /usr/local/lib/node_modules/n8n/node_modules/axios
+RUN ln -sf /home/node/custom_packages/node_modules/cheerio /usr/local/lib/node_modules/n8n/node_modules/cheerio
+RUN ln -sf /home/node/custom_packages/node_modules/image-size /usr/local/lib/node_modules/n8n/node_modules/image-size
+RUN ln -sf /home/node/custom_packages/node_modules/fs-extra /usr/local/lib/node_modules/n8n/node_modules/fs-extra
 
 # Set NODE_PATH to include our custom packages
 ENV NODE_PATH=/home/node/custom_packages/node_modules:$NODE_PATH
